@@ -1,25 +1,27 @@
-import React from 'react'
-
 import { useTranslation } from 'react-i18next'
 
-function App() {
+import Forecast from './components/Forecast'
+import Search from './components/Search'
+import useForecast from './hooks/useForecast'
+const App = (): JSX.Element => {
   const { t, i18n } = useTranslation()
+
+  const { term, options, forecast, onInputChange, onOptionSelect, onSubmit } = useForecast()
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          {t('name')}
-        </a>
-      </header>
-    </div>
+    <main className='flex justify-center items-center w-full'>
+      {forecast ? (
+        <Forecast payload={forecast} />
+      ) : (
+        <Search
+          term={term}
+          options={options}
+          onInputChange={onInputChange}
+          onOptionSelect={onOptionSelect}
+          onSubmit={onSubmit}
+        />
+      )}
+      <p>{t('name')}</p>
+    </main>
   )
 }
 
