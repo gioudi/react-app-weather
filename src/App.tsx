@@ -4,8 +4,6 @@ import Forecast from './components/Forecast'
 import Search from './components/Search'
 import useForecast from './hooks/useForecast'
 const App = (): JSX.Element => {
-  const { t, i18n } = useTranslation()
-
   const { term, options, forecast, onInputChange, onOptionSelect, onSubmit } = useForecast()
   return (
     <main className='flex justify-center items-center w-full'>
@@ -20,7 +18,6 @@ const App = (): JSX.Element => {
           onSubmit={onSubmit}
         />
       )}
-      <p>{t('name')}</p>
     </main>
   )
 }
