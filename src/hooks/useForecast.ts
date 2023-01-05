@@ -1,73 +1,81 @@
-import { useState, ChangeEvent, useEffect } from 'react';
-import { forecastType, optionType } from '../types';
+import apiURL from '../api'
+import { useState, ChangeEvent, useEffect } from 'react'
+import { forecastType, optionType } from '../types'
 const useForecast = () => {
-    const [term, setTerm] = useState<string>('');
-    const [options, setOptions] = useState<[]>([]);
-    const [city, setCity] = useState<optionType | null>(null);
-    const [forecast, setForecast] = useState<forecastType | null>(null);
+  const [term, setTerm] = useState<string>('')
+  const [options, setOptions] = useState<[]>([])
+  const [city, setCity] = useState<optionType | null>(null)
+  const [forecast, setForecast] = useState<forecastType | null>(null)
 
-    const getSearchOptions = (value: string) => {
-        fetch(`
-        http://api.openweathermap.org/geo/1.0/direct/
-        q=${value.trim()}
-        &limit=5
-        &appid=${process.env.REACT_APP_API_KEY}`)
-            .then(res => res.json())
-            .then(data => setOptions(data))
-            .catch(e => e);
-    };
+  const apiKey = process.env.REACT_APP_API_KEY
 
-    const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value.trim();
-        setTerm(value);
-        if (value === '') return;
+  const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.trim()
+    setTerm(value)
+    if (value === '') return
 
-        getSearchOptions(value);
-    };
+    getSearchOptions(value)
+  }
 
-    const onOptionSelect = (payload: optionType) => {
-        setCity(payload);
-    };
+  const getSearchOptions = async (value: string) => {
+    try {
+      const resp = await apiURL.get(`/geo/1.0/direct?q=${value.trim()}&appid=${apiKey}`)
 
-    const onSubmit = () => {
-        if (!city) return;
+      if (resp.data.length > 0) {
+        setOptions(resp.data)
+        console.log(resp.data)
+      }
+    } catch (error) {
+      throw new Error('Not found data')
+    }
+  }
 
-        getForecast(city);
-    };
+  const onOptionSelect = (payload: optionType) => {
+    setCity(payload)
+  }
 
-    const getForecast = (city: optionType) => {
-        fetch(`
-        https://api.openweathermap.org/data/2.5/weather?
-        lat=${city.lat}
-        &lon=${city.lon}
-        &appid=${process.env.REACT_APP_API_KEY}`)
-            .then(res => res.json())
-            .then(data => {
-                const forecastData = {
-                    ...data.city,
-                    list: data.list.slice(0, 16),
-                };
-                setForecast(forecastData);
-            })
-            .catch(e => e);
-    };
+  const onSubmit = () => {
+    console.log(city)
 
-    useEffect(() => {
-        if (city) {
-            setTerm(city.name);
-            setOptions([]);
+    if (!city) return
+
+    getForecast(city)
+  }
+
+  const getForecast = async (city: optionType) => {
+    try {
+      const resp = await apiURL.get(
+        `/data/2.5/weather?lat=${city.lat}&lon=${city.lon}&appid=${apiKey}`,
+      )
+
+      if (resp.data.length > 0) {
+        const forecastData = {
+          ...resp.data.city,
+          list: resp.data.list.slice(0, 16),
         }
-    }, [city]);
+        setForecast(forecastData)
+      }
+    } catch (error) {
+      throw new Error('Not found data')
+    }
+  }
 
-    return {
-        options,
-        forecast,
-        city,
-        term,
-        onInputChange,
-        onOptionSelect,
-        onSubmit,
-    };
-};
+  useEffect(() => {
+    if (city) {
+      setTerm(city.name)
+      setOptions([])
+    }
+  }, [city])
 
-export default useForecast;
+  return {
+    options,
+    forecast,
+    city,
+    term,
+    onInputChange,
+    onOptionSelect,
+    onSubmit,
+  }
+}
+
+export default useForecast

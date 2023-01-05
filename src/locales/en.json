@@ -1,4 +1,7 @@
 {
-  "name": "Sergio",
+  "title": {
+    "part_1": "Weather",
+    "part_2": "Forecast"
+  },
   "manish": "Manish"
 }
