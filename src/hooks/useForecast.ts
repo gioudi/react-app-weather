@@ -23,7 +23,6 @@ const useForecast = () => {
 
       if (resp.data.length > 0) {
         setOptions(resp.data)
-        console.log(resp.data)
       }
     } catch (error) {
       throw new Error('Not found data')
@@ -35,8 +34,6 @@ const useForecast = () => {
   }
 
   const onSubmit = () => {
-    console.log(city)
-
     if (!city) return
 
     getForecast(city)
@@ -45,10 +42,10 @@ const useForecast = () => {
   const getForecast = async (city: optionType) => {
     try {
       const resp = await apiURL.get(
-        `/data/2.5/weather?lat=${city.lat}&lon=${city.lon}&appid=${apiKey}`,
+        `/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&appid=${apiKey}`,
       )
 
-      if (resp.data.length > 0) {
+      if (resp.data) {
         const forecastData = {
           ...resp.data.city,
           list: resp.data.list.slice(0, 16),
