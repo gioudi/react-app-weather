@@ -12,7 +12,7 @@ type Props = {
 }
 
 const Header = ({ term, options, onInputChange, onOptionSelect, onSubmit }: Props): JSX.Element => {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   return (
     <div className=' md:flex w-screen p-4 bg-zinc-900  md:justify-between shadow-md items-center  mb-10 md:mb-4 '>
