@@ -1,7 +1,8 @@
 {
+  "homepage": "https://semi-dios.github.io/app-react-weather",
   "name": "app-react-weather",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@headlessui/react": "^1.7.7",
     "@testing-library/jest-dom": "^5.16.5",
@@ -70,6 +71,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Semi-dios/app-react-weather.git"
-  },
-  "homepage": "http://Semi-dios.github.io/app-react-weather"
+  }
 }
