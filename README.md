@@ -15,7 +15,7 @@
 
 ## Live Demo (if available)
 
-[Portfolio](https://semi-dios.github.io/react-app-weather/)
+[Demo](https://semi-dios.github.io/react-app-weather/)
 
 ## Getting Started
 
