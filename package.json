@@ -1,5 +1,5 @@
 {
-  "homepage": "https://semi-dios.github.io/app-react-weather",
+  "homepage": "https://semi-dios.github.io/react-app-weather",
   "name": "app-react-weather",
   "version": "0.1.0",
   "private": false,
@@ -70,6 +70,6 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Semi-dios/app-react-weather.git"
+    "url": "https://github.com/Semi-dios/react-app-weather.git"
   }
 }
