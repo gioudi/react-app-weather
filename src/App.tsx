@@ -1,9 +1,11 @@
+import BlockingNotification from './components/BlockingNotification'
 import Forecast from './components/Forecast'
 import Header from './components/Header'
 import useForecast from './hooks/useForecast'
 
 const App = (): JSX.Element => {
-  const { term, options, forecast, onInputChange, onOptionSelect, onSubmit } = useForecast()
+  const { term, loading, options, forecast, onInputChange, onOptionSelect, onSubmit } =
+    useForecast()
 
   return (
     <main className='h-screen bg-zinc-50  w-full'>
@@ -14,7 +16,7 @@ const App = (): JSX.Element => {
         onOptionSelect={onOptionSelect}
         onSubmit={onSubmit}
       />
-      {forecast ? <Forecast payload={forecast} /> : null}
+      {forecast ? <Forecast payload={forecast} /> : <BlockingNotification loading={loading} />}
     </main>
   )
 }

@@ -1,7 +1,8 @@
 {
-  "title": {
-    "part_1": "Weather",
-    "part_2": "Forecast"
-  },
-  "manish": "Manish"
+  "title": "Weather  Forecast",
+  "button": "search",
+  "bn_default_title": "Weather Forecast",
+  "bn_default_description": "Don't forget to enter the city you want to see",
+  "bn_loading_title": "Searching Information",
+  "bn_loading_description": "Don't move, you will can see it soon !"
 }

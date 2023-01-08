@@ -21,26 +21,31 @@ const Forecast = ({ payload }: Props): JSX.Element => {
       className=' w-full py-4  px-4
                 md:px-10  h-screen lg:h-auto'
     >
-      <article className='flex justify-between'>
-        <section className='relative mb-20  md:mr-10 bg-zinc-900 h-auto w-2/4 backdrop-blur-lg rounded-3xl drop-shadow-lg py-6 px-8 '>
-          <div className='flex justify-between'>
+      <article className='md:flex md:justify-between mb-10 md:mb-0'>
+        <section className='w-full relative mb-20  md:mr-10 bg-zinc-900 h-auto lg:w-2/4 backdrop-blur-lg rounded-2xl drop-shadow-lg py-6 px-8 '>
+          <div className='md:flex md:justify-between'>
             <div className='mr-3'>
               <h6 className='text-2xl font-medium text-zinc-50 '>
                 {payload.name}, {payload.country}
               </h6>
-              <p className='text-xs text-zinc-50'>
-                H: <Degree temp={Math.ceil(today.main.temp_max)} />
-                L: <Degree temp={Math.floor(today.main.temp_min)} />
-              </p>
+              <div className='inline-flex'>
+                <p className='text-xs text-zinc-50 mr-1'>
+                  H: <Degree temp={Math.ceil(today.main.temp_max)} />
+                </p>
+                <p className='text-xs text-zinc-50 '>
+                  L: <Degree temp={Math.floor(today.main.temp_min)} />
+                </p>
+              </div>
             </div>
-            <div className='flex items-center'>
-              <div className='text-xs font-bold flex mr-4 w-14 flex-col items-center bg-white/20  backdrop-blur-lg rounded drop-shadow-lg py-4 mb-5'>
+            <div className='hidden md:flex md:items-center'>
+              <div className='text-xs font-bold flex mr-4 w-20 flex-col items-center bg-white/20  backdrop-blur-lg rounded-lg drop-shadow-lg py-4 mb-5'>
                 <img className='h-10' src={require('../assets/img/SunSet.png')} />
                 <span className=''>{getSunTime(payload.sunrise)}</span>
               </div>
               <div
-                className='text-xs font-bold flex  w-14
- flex-col items-center bg-white/20  backdrop-blur-lg rounded drop-shadow-lg py-4 mb-5'
+                className='text-xs font-bold flex  w-20
+ flex-col items-center bg-white/20  backdrop-blur-lg rounded-lg
+ drop-shadow-lg py-4 mb-5'
               >
                 <img className='h-10' src={require('../assets/img/SunRise.png')} />
                 <span>{getSunTime(payload.sunset)}</span>
@@ -55,19 +60,29 @@ const Forecast = ({ payload }: Props): JSX.Element => {
           </p>
           <img
             src={require(`../assets/img/${today.weather[0].icon}.png`)}
-            className='absolute  top-16 md:bottom-9 lg:right-0 h-auto lg:top-40'
+            className='absolute  top-24 left-36 z-10   md:bottom-9 lg:left-auto lg:right-0 h-auto lg:top-40'
           />
         </section>
 
-        <section className='flex lg:inline-flex overflow-x-scroll w-[300px] lg:w-2/4 h-full overflow-y-hidden  py-2 mb-30'>
+        <section className='flex lg:inline-flex overflow-x-scroll w-full lg:w-2/4 h-full overflow-y-hidden  py-2 mb-30'>
           {payload.list.map((item, index) => (
             <div
               key={index}
               className='bg-zinc-900 w-24 h-36 inline-block text-center backdrop-blur-lg rounded-lg mx-3 p-2 flex-shrink-0'
             >
-              <p className='text-sm text-zinc-50'>
-                {index === 0 ? 'Now' : new Date(item.dt_txt).getDate()}
+              <p className='text-sm font-bold text-zinc-50 '>
+                {index === 0 ? (
+                  'Now'
+                ) : (
+                  <>
+                    {new Date(item.dt_txt).getUTCDate()},
+                    <span className='ml-1'>
+                      {new Date().toLocaleString('en-US', { month: 'short' })}
+                    </span>
+                  </>
+                )}
               </p>
+
               <img
                 src={require(`../assets/img/${today.weather[0].icon}.png`)}
                 alt={`weather-icon-${item.weather[0].description}`}
@@ -81,7 +96,10 @@ const Forecast = ({ payload }: Props): JSX.Element => {
           ))}
         </section>
       </article>
-      <section className='flex lg:inline-flex overflow-x-scroll justify-between lg:overflow-hidden w-full  h-full overflow-y-hidden  py-2'>
+      <section
+        className='flex flex-wrap
+      lg:inline-flex lg:flex-nowrap justify-around   lg:justify-between  w-full  h-full   py-2'
+      >
         <Tile
           icon='wind'
           title='Wind'
