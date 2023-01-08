@@ -1,4 +1,3 @@
-import { isTemplateExpression } from 'typescript'
 import {
   getHumidityValue,
   getPop,
