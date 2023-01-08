@@ -1,6 +1,3 @@
-import { isTemplateExpression } from 'typescript'
-import { getSunTime } from '../helpers'
-import { forecastType } from '../types'
 import Feels from './Icons/Feels'
 import Humidity from './Icons/Humidity'
 import Pop from './Icons/Pop'
