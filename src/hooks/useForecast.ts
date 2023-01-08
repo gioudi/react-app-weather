@@ -1,4 +1,4 @@
-import apiURL from '../api'
+import axios from 'axios'
 import { useState, ChangeEvent, useEffect } from 'react'
 import { forecastType, optionType } from '../types'
 const useForecast = () => {
@@ -23,7 +23,7 @@ const useForecast = () => {
   const getSearchOptions = async (value: string) => {
     try {
       setLoading(true)
-      const resp = await apiURL.get(`/geo/1.0/direct?q=${value.trim()}&appid=${apiKey}`)
+      const resp = await axios.get(`/geo/1.0/direct?q=${value.trim()}&appid=${apiKey}`)
 
       if (resp.data.length > 0) {
         setOptions(resp.data)
@@ -49,7 +49,7 @@ const useForecast = () => {
     try {
       setLoading(true)
 
-      const resp = await apiURL.get(
+      const resp = await axios.get(
         `/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&appid=${apiKey}`,
       )
       if (resp.data) {
