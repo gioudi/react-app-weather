@@ -5,7 +5,9 @@ type Props = {
 }
 
 const BlockingNotification = ({ loading }: Props): JSX.Element => {
+
   const { t } = useTranslation()
+
 
   return (
     <div className='flex items-center px-4  justify-center overflow-hidden'>
