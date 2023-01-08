@@ -8,4 +8,3 @@ const Degree = ({ temp }: Props): JSX.Element => (
   </span>
 )
 export default Degree
-

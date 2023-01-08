@@ -6,10 +6,13 @@ const useForecast = () => {
   const [options, setOptions] = useState<[]>([])
   const [city, setCity] = useState<optionType | null>(null)
   const [forecast, setForecast] = useState<forecastType | null>(null)
-
+  const [loading, setLoading] = useState<boolean>(false)
   const apiKey = process.env.REACT_APP_API_KEY
 
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setTerm('')
+    setForecast(null)
+
     const value = e.target.value.trim()
     setTerm(value)
     if (value === '') return
@@ -19,6 +22,7 @@ const useForecast = () => {
 
   const getSearchOptions = async (value: string) => {
     try {
+      setLoading(true)
       const resp = await apiURL.get(`/geo/1.0/direct?q=${value.trim()}&appid=${apiKey}`)
 
       if (resp.data.length > 0) {
@@ -26,6 +30,8 @@ const useForecast = () => {
       }
     } catch (error) {
       throw new Error('Not found data')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -41,10 +47,11 @@ const useForecast = () => {
 
   const getForecast = async (city: optionType) => {
     try {
+      setLoading(true)
+
       const resp = await apiURL.get(
         `/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&appid=${apiKey}`,
       )
-
       if (resp.data) {
         const forecastData = {
           ...resp.data.city,
@@ -54,6 +61,8 @@ const useForecast = () => {
       }
     } catch (error) {
       throw new Error('Not found data')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -72,6 +81,7 @@ const useForecast = () => {
     onInputChange,
     onOptionSelect,
     onSubmit,
+    loading,
   }
 }
 
